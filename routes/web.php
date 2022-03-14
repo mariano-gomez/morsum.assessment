@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShoppingPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [ShoppingPageController::class, 'shopList']);
+
+Route::controller(ShoppingPageController::class)->group(function () {
+    Route::get('/shop', 'shopList');
+    Route::get('/shop/{id}', 'shopDetail');
+
+    //  TODO: Show the checkout page
+//    Route::get('/shop/checkout', 'shopCheckout');
 });
