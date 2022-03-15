@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\ProductRepository;
 
 class ShoppingPageController
 {
@@ -11,11 +12,9 @@ class ShoppingPageController
      * It shows the paginated list from the list
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public final function shopList()
+    public final function shopList(ProductRepository $productRepository)
     {
-        $paginatedResults = Product::query()
-            ->simplePaginate(Product::PAGINATION_ITEMS_PER_PAGE)
-            ->toArray();
+        $paginatedResults = $productRepository->getPaginatedList();
 
         return view('shoppingPage.listProducts', [
             'items'             => $paginatedResults['data'],
@@ -30,9 +29,10 @@ class ShoppingPageController
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
      */
-    public final function shopDetail($id)
+    public final function shopDetail(ProductRepository $productRepository, int $id)
     {
-        $product = Product::find($id);
+        $product = $productRepository->getProduct($id);
+
         if (is_null($product)) {
             //  TODO: Go to 'product not found' error page
             echo "product doesn't exists";
