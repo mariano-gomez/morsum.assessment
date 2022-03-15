@@ -43,9 +43,11 @@ class ShoppingPageController
         }
     }
 
-    //  TODO: Pending
+    //  TODO: Retrieve items from cart service and pass them to the view
     public final function shopCheckout()
     {
+        return view('shoppingPage.shopCheckout', [
+        ]);
 
     }
 }

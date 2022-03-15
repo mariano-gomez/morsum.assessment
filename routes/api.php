@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::controller(\App\Http\Controllers\CartController::class)->group(function () {
+    Route::get('/cart', 'showCartContent');
+    Route::post('/cart/add', 'addItem');
+    Route::delete('/cart', 'cleanCart');
+    Route::get('/cart/checkout', 'doCheckout');
+});
