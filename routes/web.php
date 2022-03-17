@@ -21,5 +21,7 @@ Route::controller(ShoppingPageController::class)->group(function () {
     Route::get('/shop/{id}', 'shopDetail');
 
     //  TODO: Show the checkout page
-//    Route::get('/shop/checkout', 'shopCheckout');
+    Route::get('/shop/checkout', 'shopCheckout')->name('shopCheckout');
 });
+
+require __DIR__.'/auth.php';

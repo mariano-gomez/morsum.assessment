@@ -1,6 +1,11 @@
 @extends('layout')
 
 @section('content')
+    <style>
+        .list-group-item button a, .list-group-item button a:hover, .list-group-item button a:visited {
+            color: white;
+        }
+    </style>
     <ul class="list-group">
         @foreach($items as $product)
             <li class="list-group-item">
@@ -12,7 +17,20 @@
                         <a href="/shop/{{ $product['id']  }}"> {{ $product['title'] }} </a>
                     </div>
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-primary">Add to cart</button>
+                            @auth
+                                <button type="button" class="btn btn-primary">
+                                    Add to cart
+                                </button>
+                            @else
+                            <button type="button" class="btn btn-primary">
+                                <a href="{{ route('login') }}" class="">Log in</a>
+                            </button><br><br>
+                                @if (Route::has('register'))
+                                    <button type="button" class="btn btn-primary">
+                                        <a href="{{ route('register') }}" class="">Register</a>
+                                    </button>
+                                @endif
+                            @endauth
                     </div>
                 </div>
             </li>

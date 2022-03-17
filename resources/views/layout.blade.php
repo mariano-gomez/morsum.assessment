@@ -10,15 +10,27 @@
 
 {{--//  TODO: add top nav bar with cart--}}
 {{--<nav>NAV BAR (pending)</nav>--}}
-<div class="container-fluid" style="background-color: red">
-    <div class="row ">
-        <a href="{{ route('shopCheckout') }}">
-            <div class="col-md-10 text-right">
+@if (Route::has('login'))
+    <div class="row" style="background-color: red">
+        <div class="col-md-6">
+            @auth
+                <a href="{{ url('/shop') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Main page</a> /
+                <a href="{{ route('logout') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Logout</a>
+            @else
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                @endif
+            @endauth
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="{{ route('shopCheckout') }}">
                 See the Cart
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
-</div>
+@endif
 
 <div class="container">
     @yield('content')
