@@ -15,7 +15,12 @@
         <div class="col-md-6">
             @auth
                 <a href="{{ url('/shop') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Main page</a> /
-                <a href="{{ route('logout') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Logout</a>
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
             @else
                 <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
