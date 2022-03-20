@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class CartService
 {
 
-    public final function listAll(int $userId = 1)
+    public final function listAll(int $userId)
     {
         $userCartContent = DB::table('cart')
             ->join('product' , 'cart.product_id', '=', 'product.id')
@@ -20,9 +20,8 @@ class CartService
         return $userCartContent;
     }
 
-    public final function changeProductQuantity(int $userId = 1, int $productId, int $quantity)
+    public final function changeProductQuantity(int $userId, int $productId, int $quantity)
     {
-        //  TODO: see what kind of response i can return
         Cart::updateOrCreate(
             [
                 'user_id' => $userId,
@@ -32,21 +31,19 @@ class CartService
         );
     }
 
-    public final function clearCart(int $userId = 1)
+    public final function clearCart(int $userId)
     {
-        //  TODO: see what kind of response i can return
         Cart::where('user_id', $userId)->delete();
     }
 
-    public final function removeProduct(int $userId = 1, $productId)
+    public final function removeProduct(int $userId, $productId)
     {
-        //  TODO: see what kind of response i can return
         Cart::where('user_id', $userId)
             ->where('product_id', $productId)
             ->delete();
     }
 
-    public final function checkout(int $userId = 1)
+    public final function checkout(int $userId)
     {
         $products = $this->listAll($userId);
         //  TODO: construct the email
