@@ -13,7 +13,7 @@
                     <div class="col-md-3">
                         <img src="{{ $product['image_url'] }}" height="150" alt=""><br>
                         <div class="text-center">
-                            $ {{ $product['price'] }}
+                            $ <span class="unit_price">{{ ['price'] }}</span>
                         </div>
                     </div>
                     <div class="col-md-7">
@@ -48,7 +48,7 @@
     @include('partials.simplePagination')
 
     //  To show any eventuality
-    <div class="modal" tabindex="-1" id="myErrorsModal">
+    <div class="modal" tabindex="-1" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -69,7 +69,12 @@
 
     <script>
         var Shop = {
-            modal: $('#myErrorsModal'),
+            modal: $('#myModal'),
+            formatAllPrices: function() {
+                $('.unit_price').each(function() {
+                    $(this).text($.number($(this).text(), 2, '.', ','));
+                });
+            },
             setButtonListeners: function() {
                 $('.list-group').on('click', '.btn-add_to_cart', function () {
                     productId = $(this).data('product_id');
@@ -77,7 +82,7 @@
                     var addToCartPromise = Shop.updateCart(productId, quantity);
                     addToCartPromise
                         .done(function (data) {
-                            Shop.updateAddToCartButton(data);
+                            Shop.showSuccessMessage(quantity);
                         })
                         .fail(function (errorObject) {
                             Shop.showErrorMessage(errorObject);
@@ -97,6 +102,12 @@
                     );
                 Shop.modal.modal('show');
             },
+            showSuccessMessage: function (quantity) {
+                Shop.modal
+                    .find('.modal-body')
+                    .html(quantity + ' units added to your cart!');
+                Shop.modal.modal('show');
+            },
             updateCart: function(productId, quantity) {
                 return $.post('/api/cart/updateItem', {
                     productId: productId,
@@ -107,6 +118,7 @@
 
         $().ready(function() {
             Shop.setButtonListeners();
+            Shop.formatAllPrices();
         });
     </script>
 @endsection

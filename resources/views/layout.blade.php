@@ -37,6 +37,7 @@
     </div>
 @endif
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/jquery.number.min.js"></script>
 <div class="container">
     @yield('content')
 </div>
