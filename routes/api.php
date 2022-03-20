@@ -20,7 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(\App\Http\Controllers\CartController::class)->group(function () {
     Route::get('/cart', 'showCartContent');
-    Route::post('/cart/add', 'addItem');
+    Route::post('/cart/updateItem', 'updateItem');
+    Route::delete('/cart/{id}', 'removeProduct');
     Route::delete('/cart', 'cleanCart');
     Route::get('/cart/checkout', 'doCheckout');
 });
