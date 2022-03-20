@@ -18,10 +18,11 @@ Route::get('/', [ShoppingPageController::class, 'shopList']);
 
 Route::controller(ShoppingPageController::class)->group(function () {
     Route::get('/shop', 'shopList');
-    Route::get('/shop/{id}', 'shopDetail');
 
     //  TODO: Show the checkout page
-    Route::get('/shop/checkout', 'shopCheckout')->name('shopCheckout');
+    Route::middleware('auth')->get('/shop/checkout', 'shopCheckout')->name('shopCheckout');
+
+    Route::get('/shop/{id}', 'shopDetail');
 });
 
 require __DIR__.'/auth.php';
