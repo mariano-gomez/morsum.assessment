@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Services\CartService;
 use App\Services\ProductRepository;
+use Illuminate\Support\Facades\Auth;
 
 class ShoppingPageController
 {
@@ -44,10 +45,19 @@ class ShoppingPageController
     }
 
     //  TODO: Retrieve items from cart service and pass them to the view
-    public final function shopCheckout()
+    public final function shopCheckout(CartService $cartService)
     {
-        return view('shoppingPage.shopCheckout', [
-        ]);
+        //  First, we check if the user exists and is valid
+        $user = Auth::user();
+        if (is_null($user)) {
+            return redirect('/shop');
+        }
 
+        $cartProducts = $cartService->listAll($user->id);
+
+        return view('shoppingPage.shopCheckout', [
+            'user'      => $user,
+            'items'     => $cartProducts
+        ]);
     }
 }
