@@ -1,6 +1,12 @@
 @extends('layout')
 
 @section('content')
+
+    @if (!empty($error))
+        <div class="alert alert-danger">
+            {{ $error }}
+        </div>
+    @endif
     <style>
         .list-group-item button a, .list-group-item button a:hover, .list-group-item button a:visited {
             color: white;

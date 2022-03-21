@@ -19,8 +19,8 @@ Route::get('/', [ShoppingPageController::class, 'shopList']);
 Route::controller(ShoppingPageController::class)->group(function () {
     Route::get('/shop', 'shopList');
 
-    //  TODO: Show the checkout page
     Route::middleware('auth')->get('/shop/checkout', 'shopCheckout')->name('shopCheckout');
+    Route::middleware('auth')->get('/shop/confirmCheckout', 'confirmCheckout');
 
     Route::get('/shop/{id}', 'shopDetail');
 });

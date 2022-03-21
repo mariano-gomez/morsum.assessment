@@ -113,12 +113,4 @@ class CartController
             ['message' => 'success']
         ), 200);
     }
-
-    /**
-     * Emulates the checkout of a purchase, sending an email with all the items in the cart, and then cleaning the cart
-     */
-    public function doCheckout(CartService $cartService, Request $request)
-    {
-        return response()->json('doCheckout', 200);
-    }
 }

@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Mail\ConfirmCheckout;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CartService
 {
@@ -43,10 +46,13 @@ class CartService
             ->delete();
     }
 
-    public final function checkout(int $userId)
+    public final function checkout(User $user)
     {
-        $products = $this->listAll($userId);
-        //  TODO: construct the email
-        $this->clearCart($userId);
+        $products = $this->listAll($user->id);
+        if ($products->count() == 0) {
+            throw new \Exception('Trying to send checkout email for an empty cart');
+        }
+
+        Mail::to($user->email)->send(new ConfirmCheckout($products));
     }
 }
