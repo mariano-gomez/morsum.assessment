@@ -78,7 +78,6 @@
                     let removeFromCartPromise = Shop.removeProduct(productId);
                     removeFromCartPromise
                         .done(function (data) {
-                            Shop.showSuccessMessage();
                             trigger.closest('li').remove();
                             Shop.recalculateTotal();
                         })
