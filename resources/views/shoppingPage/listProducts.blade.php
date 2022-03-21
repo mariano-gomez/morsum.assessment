@@ -13,7 +13,7 @@
                     <div class="col-md-3">
                         <img src="{{ $product['image_url'] }}" height="150" alt=""><br>
                         <div class="text-center">
-                            $ <span class="unit_price">{{ ['price'] }}</span>
+                            $ <span class="unit_price">{{ $product['price'] }}</span>
                         </div>
                     </div>
                     <div class="col-md-7">
